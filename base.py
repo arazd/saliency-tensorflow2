@@ -1,10 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy import ndimage
-
 import tensorflow as tf
-from tensorflow.keras.applications import DenseNet121
-from tensorflow.keras import Model
 
 
 class Saliency_Map():
@@ -69,5 +64,5 @@ class Saliency_Map():
         arr_min, arr_max  = np.min(grad_max_), np.max(grad_max_)
         normalized_grad = (grad_max_ - arr_min) / (arr_max - arr_min + 1e-18)
         normalized_grad = normalized_grad.reshape(1,grad_x.shape[1],grad_x.shape[2],1)
-        
+
         return normalized_grad
