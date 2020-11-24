@@ -66,3 +66,12 @@ class SaliencyMap():
         normalized_grad = normalized_grad.reshape(1,grad_x.shape[1],grad_x.shape[2],1)
 
         return normalized_grad
+
+
+    def get_mask(self, image, tensor_format=False):
+        """Returns a saliency mask specific to each method.
+
+        Args:
+            image: input image in NHWC format, not batched.
+        """
+        raise NotImplementedError('A derived class should implement get_mask()')

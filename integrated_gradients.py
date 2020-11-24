@@ -5,7 +5,7 @@ from tensorflow.keras.applications import densenet
 
 class IntegratedGradients(SaliencyMap):
 
-    def get_integrated_gradients(self, image, baseline=None, num_steps=50):
+    def get_mask(self, image, baseline=None, num_steps=50):
         """Computes Integrated Gradients for a predicted label.
 
         Args:
