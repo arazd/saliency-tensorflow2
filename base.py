@@ -2,13 +2,13 @@ import numpy as np
 import tensorflow as tf
 
 
-class Saliency_Map():
+class SaliencyMap():
     def __init__(self, model):
         """Constructs a Vanilla Gradient Map by computing dy/dx.
 
         Args:
-        model: The TensorFlow model used to evaluate Gradient Map.
-            model takes image as input and outputs probabilities vector.
+            model: The TensorFlow model used to evaluate Gradient Map.
+                model takes image as input and outputs probabilities vector.
         """
         self.model = model
 
@@ -17,11 +17,11 @@ class Saliency_Map():
         """Outputs top predicted class for the input image.
 
         Args:
-        img_processed: numpy image array in NHWC format, pre-processed according
-            to the defined model standard.
+            img_processed: numpy image array in NHWC format, pre-processed according
+                to the defined model standard.
 
         Returns:
-        Index of the top predicted class for the input image.
+            Index of the top predicted class for the input image.
         """
         preds = self.model.predict(img_processed)
         top_pred_idx = tf.argmax(preds[0])
@@ -32,11 +32,11 @@ class Saliency_Map():
         """Computes the gradients of outputs w.r.t input image.
 
         Args:
-        image: numpy image array in NHWC format, pre-processed according
-            to the defined model standard.
+            image: numpy image array in NHWC format, pre-processed according
+                to the defined model standard.
 
         Returns:
-        Gradients of the predictions w.r.t image (same shape as input image)
+            Gradients of the predictions w.r.t image (same shape as input image)
         """
         top_pred_idx = self.get_top_predicted_idx(image)
 
@@ -54,10 +54,10 @@ class Saliency_Map():
         (for visualization purposes).
 
         Args:
-        grad_x: numpy gradients array.
+            grad_x: numpy gradients array.
 
         Returns:
-        Gradients of the predictions w.r.t image (same shape as input image)
+            Gradients of the predictions w.r.t image (same shape as input image)
         """
         abs_grads = np.abs(grad_x)
         grad_max_ = np.max(abs_grads, axis=3)[0]
