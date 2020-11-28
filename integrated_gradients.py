@@ -5,7 +5,7 @@ from tensorflow.keras.applications import densenet
 
 class IntegratedGradients(SaliencyMap):
 
-    def get_mask(self, image, baseline=None, num_steps=50):
+    def get_mask(self, image, baseline=None, num_steps=50, preprocess=True):
         """Computes Integrated Gradients for a predicted label.
 
         Args:
@@ -36,7 +36,8 @@ class IntegratedGradients(SaliencyMap):
             ]
         interpolated_image = np.vstack(interpolated_image).astype(np.float32)
 
-        interpolated_image = self.preprocess_input(interpolated_image)
+        if preprocess:
+            interpolated_image = self.preprocess_input(interpolated_image)
 
         grads = []
         pbar = tqdm(total=num_steps)
@@ -57,6 +58,6 @@ class IntegratedGradients(SaliencyMap):
         return integrated_grads
 
 
-    def preprocess_input(image):
+    def preprocess_input(self, image):
         preprocessed = densenet.preprocess_input(image)
         return preprocessed

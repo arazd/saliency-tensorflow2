@@ -14,3 +14,17 @@ class VanillaGradients(SaliencyMap):
         if not tensor_format:
             mask = mask.numpy()
         return mask
+
+
+    def get_smooth_mask(self, image, stdev_spread=0.1, n=30, magnitude=False):
+        stdev = stdev_spread * (np.max(image) - np.min(image))
+        total_gradients = np.zeros_like(image)
+
+        for i in range(n):
+            noise = np.random.normal(0, stdev, image.shape)
+            grads = self.get_gradients(image + noise)
+            if magnitude:
+                grads *= grads
+            total_gradients += grads
+
+        return total_gradients / n
