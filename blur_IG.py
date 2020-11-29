@@ -1,7 +1,6 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.applications import densenet
-
+from scipy import ndimage
 
 class BlurIG(SaliencyMap):
 
@@ -20,44 +19,40 @@ class BlurIG(SaliencyMap):
         Returns:
             Integrated gradients w.r.t input image
         """
-        # If baseline is not provided, start with a black image
-        # having same size as the input image.
-        if baseline is None:
-            img_size = image.shape
-            baseline = np.zeros(img_size).astype(np.float32)
+
+        if sqrt:
+            sigmas = [math.sqrt(float(i)*max_sigma/float(steps)) for i in range(0, steps+1)]
         else:
-            baseline = baseline.astype(np.float32)
+            sigmas = [float(i)*max_sigma/float(steps) for i in range(0, steps+1)]
+        step_vector_diff = [sigmas[i+1] - sigmas[i] for i in range(0, steps)]
 
-        img_input = image
-        top_pred_idx = self.get_top_predicted_idx(model, image)
-        interpolated_image = [
-            baseline + (i / num_steps) * (img_input - baseline)
-            for i in range(num_steps + 1)
-            ]
-        interpolated_image = np.vstack(interpolated_image).astype(np.float32)
+        total_gradients = np.zeros_like(x_value)
 
-        if preprocess:
-            interpolated_image = self.preprocess_input(interpolated_image)
+        for i in range(steps):
+            x_step = gaussian_blur(x_value, sigmas[i])
+            x_baseline = gaussian_blur(x_value, sigmas[i] + grad_step)
+            gaussian_gradient = (x_baseline - x_step) / grad_step
+            gradient_map = self.get_gradients(model, x_step)
 
-        grads = []
-        pbar = tqdm(total=num_steps)
-        for i, img in enumerate(interpolated_image):
-            pbar.update(1)
-            img = tf.expand_dims(img, axis=0)
-            grad = self.get_gradients(model, img)
-            grads.append(grad[0])
-        pbar.close()
-        grads = tf.convert_to_tensor(grads, dtype=tf.float32)
+            total_gradients += step_vector_diff[i] * np.multiply(gaussian_gradient, gradient_map)
 
-        # 4. Approximate the integral using the trapezoidal rule
-        grads = (grads[:-1] + grads[1:]) / 2.0
-        avg_grads = tf.reduce_mean(grads, axis=0)
-
-        # 5. Calculate integrated gradients and return
-        integrated_grads = (img_input - baseline) * avg_grads
-        return integrated_grads
+        total_gradients *= -1.0
+        return total_gradients
 
 
-    def preprocess_input(self, image):
-        preprocessed = densenet.preprocess_input(image)
-        return preprocessed
+
+    def gaussian_blur(image, sigma):
+        """Returns Gaussian blur filtered 3d (WxHxC) image.
+        Args:
+        image: 3 dimensional ndarray / input image (W x H x C).
+        sigma: Standard deviation for Gaussian blur kernel.
+        """
+        if sigma == 0:
+            image_blurred = image
+        else:
+            image_blurred = ndimage.gaussian_filter(image[0],
+                                                     sigma=[sigma, sigma, 0],
+                                                     mode='constant')
+            image_blurred = np.expand_dims(image_blurred, axis=0)
+
+        return image_blurred
