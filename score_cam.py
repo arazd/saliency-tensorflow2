@@ -1,7 +1,5 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.applications import densenet
-
 
 class ScoreCam(SaliencyMap):
 
