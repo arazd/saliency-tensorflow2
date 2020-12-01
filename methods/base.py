@@ -13,7 +13,7 @@ class SaliencyMap():
         self.model = model
 
 
-    def get_top_predicted_idx(self, img_processed):
+    def get_top_predicted_idx(self, image):
         """Outputs top predicted class for the input image.
 
         Args:
@@ -23,7 +23,7 @@ class SaliencyMap():
         Returns:
             Index of the top predicted class for the input image.
         """
-        preds = self.model.predict(img_processed)
+        preds = self.model.predict(image)
         top_pred_idx = tf.argmax(preds[0])
         return top_pred_idx
 
@@ -38,11 +38,12 @@ class SaliencyMap():
         Returns:
             Gradients of the predictions w.r.t image (same shape as input image)
         """
+        image = tf.convert_to_tensor(image)
         top_pred_idx = self.get_top_predicted_idx(image)
 
         with tf.GradientTape() as tape:
             tape.watch(image)
-            preds = model(image)
+            preds = self.model(image)
             top_class = preds[:, top_pred_idx]
 
         grads = tape.gradient(top_class, image)
