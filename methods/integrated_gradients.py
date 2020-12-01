@@ -2,6 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.applications import densenet
 
+from .base import SaliencyMap
 
 class IntegratedGradients(SaliencyMap):
 

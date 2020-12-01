@@ -2,6 +2,8 @@ import numpy as np
 import tensorflow as tf
 from scipy import ndimage
 
+from .base import SaliencyMap
+
 class BlurIG(SaliencyMap):
 
     def get_mask(self, image, preprocess=True):

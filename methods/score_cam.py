@@ -1,6 +1,8 @@
 import numpy as np
 import tensorflow as tf
 
+from .base import SaliencyMap
+
 class ScoreCam(SaliencyMap):
 
     def get_mask(self, image, last_conv_layer_name):

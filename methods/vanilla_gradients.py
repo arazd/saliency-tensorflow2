@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
+from .base import SaliencyMap
 
 class VanillaGradients(SaliencyMap):
 
