@@ -37,7 +37,7 @@ class GradCam(SaliencyMap):
 
         with tf.GradientTape() as tape:
             # Compute activations of the last conv layer and make the tape watch it
-            last_conv_layer_output = last_conv_layer_model(img_processed)
+            last_conv_layer_output = last_conv_layer_model(image)
             tape.watch(last_conv_layer_output)
             # Compute class predictions
             preds = classifier_model(last_conv_layer_output)
