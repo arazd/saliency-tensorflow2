@@ -4,7 +4,7 @@ from scipy import ndimage
 
 from .base import SaliencyMap
 
-class BlurIG(SaliencyMap):
+class GuidedBackprop(SaliencyMap):
 
     def get_mask(self, image, preprocess=True):
         """Computes Integrated Gradients for a predicted label.
