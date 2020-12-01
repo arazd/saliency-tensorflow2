@@ -43,7 +43,7 @@ class SaliencyMap():
 
         with tf.GradientTape() as tape:
             tape.watch(image)
-            preds = self.model(image)
+            preds = self.model.predict(image)
             top_class = preds[:, top_pred_idx]
 
         grads = tape.gradient(top_class, image)
