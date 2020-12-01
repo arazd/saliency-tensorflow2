@@ -23,13 +23,13 @@ class GradCam(SaliencyMap):
         """
 
         #last_conv_layer_name = 'conv5_block16_concat'
-        last_conv_layer = model.get_layer(last_conv_layer_name)
-        last_conv_layer_idx = model.layers.index(last_conv_layer)
-        last_conv_layer_model = tf.keras.Model(model.inputs, last_conv_layer.output)
+        last_conv_layer = self.model.get_layer(last_conv_layer_name)
+        last_conv_layer_idx = self.model.layers.index(last_conv_layer)
+        last_conv_layer_model = tf.keras.Model(self.model.inputs, last_conv_layer.output)
 
         classifier_input = tf.keras.Input(shape=last_conv_layer.output.shape[1:])
         x = classifier_input
-        classifier_layers = model.layers[last_conv_layer_idx+1:]
+        classifier_layers = self.model.layers[last_conv_layer_idx+1:]
         for layer in classifier_layers:
             x = layer(x)
         classifier_model = tf.keras.Model(classifier_input, x)
