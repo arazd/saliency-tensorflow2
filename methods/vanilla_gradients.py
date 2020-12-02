@@ -9,7 +9,7 @@ class VanillaGradients(SaliencyMap):
         """Constructs a Vanilla Gradient Map by computing dy/dx.
 
         Args:
-            image: input image in NHWC format, not batched.
+            image: input image in NHWC format.
         """
         mask = self.get_gradients(image)
 
