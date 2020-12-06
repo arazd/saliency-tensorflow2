@@ -17,6 +17,11 @@ class VanillaGradients(SaliencyMap):
 
 
     def get_smooth_mask(self, image, stdev_spread=0.1, n=30, magnitude=False):
+        """Constructs a SmoothGrad Saliency Map by computing dy/dx.
+
+        Args:
+            image: input image in NHWC format.
+        """
         stdev = stdev_spread * (np.max(image) - np.min(image))
         total_gradients = np.zeros_like(image)
 
