@@ -4,6 +4,7 @@ from scipy import ndimage
 
 from .base import SaliencyMap
 
+
 class BlurIG(SaliencyMap):
 
     def get_mask(self, image, max_sigma=50, num_steps=100, grad_step=0.01, sqrt=False, preprocess=True):
