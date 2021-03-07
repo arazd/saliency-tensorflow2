@@ -6,7 +6,7 @@ from .base import SaliencyMap
 class ScoreCam(SaliencyMap):
 
     def get_mask(self, image, last_conv_layer_name):
-        """Computes Integrated Gradients for a predicted label.
+        """Computes ScoreCam mask for a predicted label.
 
         Args:
             image (ndarray): Original image
