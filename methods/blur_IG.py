@@ -8,7 +8,7 @@ from .base import SaliencyMap
 class BlurIG(SaliencyMap):
 
     def get_mask(self, image, max_sigma=50, num_steps=100, grad_step=0.01, sqrt=False, preprocess=True):
-        """Computes Integrated Gradients for a predicted label.
+        """Computes Blur Integrated Gradients for a predicted label.
 
         Args:
             image (ndarray): Original image
@@ -20,7 +20,7 @@ class BlurIG(SaliencyMap):
                 num_steps is set to 50.
 
         Returns:
-            Integrated gradients w.r.t input image
+            Blur Integrated Gradients w.r.t input image
         """
 
         if sqrt:
