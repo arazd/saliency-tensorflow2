@@ -30,7 +30,7 @@ class IntegratedGradients(SaliencyMap):
             baseline = baseline.astype(np.float32)
 
         img_input = image
-        top_pred_idx = self.get_top_predicted_idx(model, image)
+        top_pred_idx = self.get_top_predicted_idx(image)
         interpolated_image = [
             baseline + (i / num_steps) * (img_input - baseline)
             for i in range(num_steps + 1)
@@ -45,7 +45,7 @@ class IntegratedGradients(SaliencyMap):
         for i, img in enumerate(interpolated_image):
             pbar.update(1)
             img = tf.expand_dims(img, axis=0)
-            grad = self.get_gradients(model, img)
+            grad = self.get_gradients(img)
             grads.append(grad[0])
         pbar.close()
         grads = tf.convert_to_tensor(grads, dtype=tf.float32)
