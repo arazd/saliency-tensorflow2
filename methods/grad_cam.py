@@ -7,7 +7,7 @@ from .base import SaliencyMap
 class GradCam(SaliencyMap):
 
     def get_mask(self, image, last_conv_layer_name, preprocess=True):
-        """Computes Integrated Gradients for a predicted label.
+        """Computes GradCAM saliency map.
 
         Args:
             image (ndarray): Original image
@@ -19,7 +19,7 @@ class GradCam(SaliencyMap):
                 num_steps is set to 50.
 
         Returns:
-            Integrated gradients w.r.t input image
+            GradCAM w.r.t input image
         """
 
         #last_conv_layer_name = 'conv5_block16_concat'
