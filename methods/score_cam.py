@@ -18,7 +18,7 @@ class ScoreCam(SaliencyMap):
                 num_steps is set to 50.
 
         Returns:
-            Integrated gradients w.r.t input image
+            ScoreCAM mask.
         """
         # getting original class idx
         top_pred_index = self.get_top_predicted_idx(image)
