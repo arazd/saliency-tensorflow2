@@ -10,12 +10,8 @@ class ScoreCam(SaliencyMap):
 
         Args:
             image (ndarray): Original image
-            top_pred_idx: Predicted label for the input image
-            baseline (ndarray): The baseline image to start with for interpolation
-            num_steps: Number of interpolation steps between the baseline
-                and the input used in the computation of integrated gradients. These
-                steps along determine the integral approximation error. By default,
-                num_steps is set to 50.
+            last_conv_layer_name: Name of the last convolutional layer
+                                  used to calculate scoreCAM mask.
 
         Returns:
             ScoreCAM mask.
