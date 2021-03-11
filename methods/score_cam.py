@@ -19,7 +19,6 @@ class ScoreCam(SaliencyMap):
         # getting original class idx
         top_pred_index = self.get_top_predicted_idx(image)
 
-        #last_conv_layer_name = 'conv5_block16_concat'
         last_conv_layer = self.model.get_layer(last_conv_layer_name)
         last_conv_layer_model = tf.keras.Model(self.model.inputs, last_conv_layer.output)
 
