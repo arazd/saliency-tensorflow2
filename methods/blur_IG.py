@@ -20,11 +20,9 @@ class BlurIG(SaliencyMap):
                 num_steps is set to 50.
 
         Returns:
-<<<<<<< HEAD
             Blur Integrated Gradients w.r.t input image
 =======
             Blur Integrated gradients w.r.t input image
->>>>>>> c2d20235aa2a345476f2ede38689e1a077464b98
         """
 
         if sqrt:
@@ -54,6 +52,7 @@ class BlurIG(SaliencyMap):
         image: 3 dimensional ndarray / input image (W x H x C).
         sigma: Standard deviation for Gaussian blur kernel.
         """
+        
         if sigma == 0:
             image_blurred = image
         else:
