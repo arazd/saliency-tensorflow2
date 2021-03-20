@@ -11,7 +11,7 @@ class VanillaGradients(SaliencyMap):
         Args:
             image: input image in NHWC format.
         """
-        
+        mask = self.get_gradients(image)
         return mask
 
 
