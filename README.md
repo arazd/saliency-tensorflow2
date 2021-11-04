@@ -9,11 +9,11 @@ This repository contains popular saliency methods realized in tensorflow 2:
 * Score-CAM
 * Guided Backprop
 
-## Explanations
+<!-- ## Explanations
 
 ## Getting started
 
-## Download
+## Download -->
 
 
 
